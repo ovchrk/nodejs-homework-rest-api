@@ -68,13 +68,23 @@ router.delete("/:id", async (req, res, next) => {
   }
 });
 
+const updateSchema = Joi.object({
+  name: Joi.string(),
+  email: Joi.string(),
+  phone: Joi.string(),
+}).min(1);
+
 router.put("/:id", async (req, res, next) => {
   try {
-    const { error } = addSchema.validate(req.body);
+    if (req.body === {}) {
+      console.log(`BODY`);
+    }
+    const { error } = updateSchema.validate(req.body);
     if (error) {
       throw HttpError(400, "missing fields");
     }
-    const { id, body } = req.params;
+    const { id } = req.params;
+
     const result = await contacts.updateContact(id, req.body);
     if (!result) {
       throw HttpError(404, "Not found!");
