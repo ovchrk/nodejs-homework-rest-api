@@ -11,7 +11,7 @@ const addSchema = Joi.object({
   email: Joi.string()
     .required()
     .messages({ "any.required": "missing required email field" }),
-  phone: Joi.string()
+  phone: Joi.number()
     .required()
     .messages({ "any.required": "missing required phone field" }),
 });
@@ -71,17 +71,16 @@ router.delete("/:id", async (req, res, next) => {
 const updateSchema = Joi.object({
   name: Joi.string(),
   email: Joi.string(),
-  phone: Joi.string(),
-}).min(1);
+  phone: Joi.number(),
+})
+  .min(1)
+  .rule({ message: "missing fields" });
 
 router.put("/:id", async (req, res, next) => {
   try {
-    if (req.body === {}) {
-      console.log(`BODY`);
-    }
     const { error } = updateSchema.validate(req.body);
     if (error) {
-      throw HttpError(400, "missing fields");
+      throw HttpError(400, error.message);
     }
     const { id } = req.params;
 
