@@ -3,7 +3,7 @@ const express = require("express");
 // const cors = require("cors");
 const mongoose = require("mongoose");
 // require("dotenv").config();
-const app = express();
+// const app = express();
 
 const DB_HOST = `mongodb+srv://ovchrk:Nastya03082017@cluster0.qaqm6vd.mongodb.net/db-contacts?retryWrites=true&w=majority`;
 
