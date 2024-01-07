@@ -4,7 +4,12 @@ const cors = require("cors");
 const router = express.Router();
 
 const contactsController = require("../../controllers/contacts-controller");
-const { isEmptyBody, isValidId, validateBody } = require("../../middleware");
+const {
+  isEmptyBody,
+  isValidId,
+  validateBody,
+  authenticate,
+} = require("../../middleware");
 
 const {
   addSchema,
@@ -12,6 +17,8 @@ const {
   updateFavoriteSchema,
 } = require("../../models/Contact");
 const { isEmptyFavorite } = require("../../middleware/isEmptyBody");
+
+router.use(authenticate);
 
 router.get("/", contactsController.getAll);
 
