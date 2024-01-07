@@ -58,7 +58,7 @@ const getCurrent = async (req, res, next) => {
   res.json({ email, subscription });
 };
 
-const logOut = async (req, res, nest) => {
+const logOut = async (req, res) => {
   const { _id } = req.user;
   await User.findByIdAndUpdate(_id, { token: null });
   res.json(204, "");
