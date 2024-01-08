@@ -11,7 +11,7 @@ const getAll = async (req, res, next) => {
   const result = await Contact.find({ owner }, "-createdAt -updatedAt", {
     skip,
     limit,
-  }).populate("owner");
+  });
   res.json(result);
 };
 
@@ -19,7 +19,7 @@ const getById = async (req, res) => {
   const { id: _id } = req.params;
   const { _id: owner } = req.user;
 
-  const result = await Contact.findByIdAndUpdate({ _id, owner }, req.body);
+  const result = await Contact.findOne({ _id, owner });
   if (!result) {
     throw HttpError(404, "Not found!");
   }
