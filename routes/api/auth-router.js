@@ -3,9 +3,13 @@ const express = require("express");
 const authRouter = express.Router();
 const authController = require("../../controllers/auth-controller");
 
-const { isEmptyBody, validateBody, authenticate } = require("../../middleware");
+const {
+  isEmptyBody,
+  validateBody,
+  authenticate,
+  upload,
+} = require("../../middleware");
 
-const { isEmptyFavorite } = require("../../middleware/isEmptyBody");
 const { userSignUpSchema, userSignInSchema } = require("../../models/User");
 
 authRouter.post(
@@ -24,5 +28,11 @@ authRouter.post(
 authRouter.get("/current", authenticate, authController.getCurrent);
 
 authRouter.post("/logout", authenticate, authController.logOut);
+authRouter.patch(
+  "/avatars",
+  authenticate,
+  upload.single("avatar"),
+  authController.avatarChange
+);
 
 module.exports = authRouter;

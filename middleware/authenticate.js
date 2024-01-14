@@ -1,5 +1,4 @@
 const jwt = require("jsonwebtoken");
-const contactsController = require("../controllers/contacts-controller");
 const { HttpError } = require("../helpers");
 const { User } = require("../models/User");
 
