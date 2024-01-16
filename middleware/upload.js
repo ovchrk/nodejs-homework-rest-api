@@ -20,12 +20,12 @@ const limits = {
 };
 
 const fileFilter = (req, file, cb) => {
-  const extention = req.originalname.split(".").pop();
+  const extention = file.originalname.split(".").pop();
   if (extention === "exe") {
     cb(HttpError(400, ".exe not valid"));
   }
 };
 
-const upload = multer({ storage, limits });
+const upload = multer({ storage, limits, fileFilter });
 
 module.exports = { upload };
