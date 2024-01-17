@@ -79,6 +79,10 @@ const logOut = async (req, res) => {
 
 const avatarChange = async (req, res) => {
   const { _id } = req.user;
+  console.log(req.file);
+  if (!req.file) {
+    throw HttpError(400, "Please upload a valid avatar.");
+  }
   const { path: oldPath, filename } = req.file;
   const newPath = path.join(avatarPath, filename);
   await fs.rename(oldPath, newPath);

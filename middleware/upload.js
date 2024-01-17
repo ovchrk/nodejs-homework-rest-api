@@ -24,7 +24,7 @@ const fileFilter = (req, file, cb) => {
   if (extention === "exe") {
     cb(HttpError(400, ".exe not valid"));
   }
-  cb(null, false);
+  cb(null, true);
 };
 
 const upload = multer({ storage, limits, fileFilter });
