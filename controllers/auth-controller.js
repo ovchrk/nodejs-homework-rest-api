@@ -79,17 +79,26 @@ const logOut = async (req, res) => {
 
 const avatarChange = async (req, res) => {
   const { _id } = req.user;
-  console.log(req.file);
+
   if (!req.file) {
     throw HttpError(400, "Please upload a valid avatar.");
   }
   const { path: oldPath, filename } = req.file;
+  // Jimp.read(oldPath)
+  //   .then((image) => {
+  //     image.resize(250, 250, err, (image) => {});
+  //   })
+  //   .catch((err) => {
+  //     throw HttpError(401, "Something went wrong with image.");
+  //   });
   const newPath = path.join(avatarPath, filename);
-  await fs.rename(oldPath, newPath);
 
+  fs.rename(oldPath, newPath);
   Jimp.read(newPath)
     .then((image) => {
-      image.cover(250, 250);
+      image.cover(250, 250, (err, image) => {
+        image.writeAsync(newPath);
+      });
     })
     .catch((err) => {
       throw HttpError(401, "Something went wrong with image.");
