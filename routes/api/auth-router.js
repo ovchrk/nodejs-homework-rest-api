@@ -10,7 +10,11 @@ const {
   upload,
 } = require("../../middleware");
 
-const { userSignUpSchema, userSignInSchema } = require("../../models/User");
+const {
+  userSignUpSchema,
+  userSignInSchema,
+  userEmailSchema,
+} = require("../../models/User");
 
 authRouter.post(
   "/register",
@@ -34,5 +38,14 @@ authRouter.patch(
   upload.single("avatar"),
   authController.avatarChange
 );
+
+authRouter.post(
+  "/verify",
+  isEmptyBody,
+  validateBody(userEmailSchema),
+  authController.resendVerifyEmail
+);
+
+authRouter.get("/verify/:verificationToken", authController.verifyEmail);
 
 module.exports = authRouter;
