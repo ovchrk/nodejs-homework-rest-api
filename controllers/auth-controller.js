@@ -64,7 +64,7 @@ const verifyEmail = async (req, res, next) => {
 const resendVerifyEmail = async (req, res, next) => {
   const { email } = req.body;
   const user = await User.findOne({ email });
-  console.log(`${user.verificationToken}`);
+
   if (!user) {
     throw HttpError(400, "User not found");
   }
